@@ -1,9 +1,7 @@
 import streamlit as st
 from google import genai
 
-client = genai.Client(api_key=st.secrets["AQ.Ab8RN6Ke_xujsvfGF_OdSNVaN9lBQyHloFzOGgtkG317qvfx4Q"])
-
-model = genai.GenerativeModel("gemini-3.5-flash")
+client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
 PERSONA = (
     "You are Big-O Bot, a friendly and patient computer science tutor helping a "
@@ -58,5 +56,8 @@ if st.button("Generate"):
             )
 
         with st.spinner("Big-O Bot is thinking..."):
-            response = model.generate_content(prompt)
+            response = client.models.generate_content(
+                model="gemini-3.5-flash",
+                contents=prompt
+            )
         st.write(response.text)
